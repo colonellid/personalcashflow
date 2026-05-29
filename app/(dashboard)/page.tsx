@@ -54,6 +54,9 @@ export default function DashboardPage() {
 						<Link href="/upload" className="pill pill-teal hidden sm:inline-flex">
 							Upload CSV
 						</Link>
+						<Link href="/faturas" className="pill pill-yellow hidden sm:inline-flex">
+							Faturas
+						</Link>
 						<span className="pill pill-purple hidden md:inline-flex">Dashboard</span>
 						<span className="pill pill-muted hidden md:inline-flex">v1</span>
 					</div>
