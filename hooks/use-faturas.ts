@@ -7,26 +7,39 @@ export type TransacaoFatura = {
   descricao: string
   categoria: string
   banco: string
-  origem: string
-  extra1: string
-  extra2: string
+  tipo: "fatura" | "extrato" | "outro"
   valor: number
+  valorOriginal: number
+  meta: string | null
 }
 
-export type FaturaGroup = {
-  id: string
-  banco: string
-  mesAnoKey: string
-  mesAnoLabel: string
-  count: number
+export type DiaGroup = {
+  dataKey: string
   gastos: number
   receitas: number
   saldo: number
   transacoes: TransacaoFatura[]
 }
 
+export type FaturaGroup = {
+  id: string
+  banco: string
+  tipo: "fatura" | "extrato" | "outro"
+  mesAnoKey: string
+  mesAnoLabel: string
+  count: number
+  gastos: number
+  receitas: number
+  saldo: number
+  dias: DiaGroup[]
+}
+
 export type FaturasData = {
   faturas: FaturaGroup[]
+  meta: {
+    tiposPresentes: string[]
+    bancosPresentes: string[]
+  }
 }
 
 async function fetchFaturas(): Promise<FaturasData> {
