@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useDashboard } from "@/hooks/use-dashboard"
 import { Loader } from "@/components/loader"
 import { Topbar } from "@/components/topbar"
@@ -49,10 +50,12 @@ export default function DashboardPage() {
 						</p>
 					</div>
 
-					{/* Opcional: badges pra dar “cara de produto” */}
-					<div className="hidden md:flex items-center gap-2">
-						<span className="pill pill-purple">Dashboard</span>
-						<span className="pill pill-muted">v1</span>
+					<div className="flex items-center gap-2">
+						<Link href="/upload" className="pill pill-teal hidden sm:inline-flex">
+							Upload CSV
+						</Link>
+						<span className="pill pill-purple hidden md:inline-flex">Dashboard</span>
+						<span className="pill pill-muted hidden md:inline-flex">v1</span>
 					</div>
 				</header>
 
