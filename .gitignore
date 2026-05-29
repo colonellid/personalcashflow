@@ -47,3 +47,6 @@ personalcashflow-ynab-*.json
 # Env files
 .env.local
 .env*.local
+
+# Claude Code internal
+.claude/
