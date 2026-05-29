@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server"
-import { uploadFileToDrive } from "@/lib/google/drive-upload"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -20,50 +19,36 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const folderId =
-      tipo === "extrato"
-        ? process.env.DRIVE_EXTRATOS_ID
-        : process.env.DRIVE_FOLDER_ID
+    const webhookUrl = process.env.APPS_SCRIPT_WEBHOOK_URL
+    const webhookToken = process.env.APPS_SCRIPT_WEBHOOK_TOKEN
 
-    if (!folderId) {
-      const varName = tipo === "extrato" ? "DRIVE_EXTRATOS_ID" : "DRIVE_FOLDER_ID"
+    if (!webhookUrl || !webhookToken) {
       return NextResponse.json(
-        { error: `Variável de ambiente ${varName} não configurada` },
+        { error: "APPS_SCRIPT_WEBHOOK_URL ou APPS_SCRIPT_WEBHOOK_TOKEN não configurados" },
         { status: 500 },
       )
     }
 
     const buffer = Buffer.from(await file.arrayBuffer())
-    const uploaded = await uploadFileToDrive(file.name, buffer, folderId)
+    const base64 = buffer.toString("base64")
 
-    // Aciona o Apps Script para processar automaticamente (se configurado)
-    let webhook: { triggered: boolean; status?: string; error?: string } = {
-      triggered: false,
-    }
-    const webhookUrl = process.env.APPS_SCRIPT_WEBHOOK_URL
-    const webhookToken = process.env.APPS_SCRIPT_WEBHOOK_TOKEN
-
-    if (webhookUrl && webhookToken) {
-      try {
-        const res = await fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({ token: webhookToken }).toString(),
-          signal: AbortSignal.timeout(30_000),
-        })
-        const json = (await res.json()) as { status?: string }
-        webhook = { triggered: true, status: json.status ?? "ok" }
-      } catch (e) {
-        webhook = { triggered: false, error: String(e) }
-      }
-    }
-
-    return NextResponse.json({
-      ok: true,
-      file: { id: uploaded.id, name: uploaded.name },
-      tipo,
-      webhook,
+    const res = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: webhookToken,
+        file: base64,
+        filename: file.name,
+        tipo,
+      }),
+      signal: AbortSignal.timeout(60_000),
     })
+
+    const json = (await res.json()) as { status?: string; error?: string }
+
+    if (json.error) throw new Error(json.error)
+
+    return NextResponse.json({ ok: true, file: file.name, tipo, webhook: json })
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 })
   }
