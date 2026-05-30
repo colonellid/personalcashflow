@@ -9,31 +9,37 @@ export type DashboardData = {
     gastosMes: number
     saldoMes: number
     projetadoMes: number
+    variacao: number
+    maiorGastoDia: number
+    maiorGastoValor: number
+    totalAssinaturas: number
   }
-  fluxoMensal: Array<{
-    mesLabel: string
-    receitas: number
-    gastos: number
-  }>
-  transacoesPorCategoria: Array<{
-    categoria: string
-    valor: number
-    pct: number
-  }>
-  ultimasTransacoes: Array<{
-    data: string
+  fluxoMensal: Array<{ mesLabel: string; receitas: number; gastos: number }>
+  transacoesPorCategoria: Array<{ categoria: string; valor: number; pct: number }>
+  categoriaComparacao: Array<{ categoria: string; valor: number; pct: number; anterior: number; variacao: number | null }>
+  ultimasTransacoes: Array<{ data: string; descricao: string; categoria: string; banco?: string; valor: number }>
+  proxProjecoes: Array<{ data: string; descricao: string; categoria: string; tipo: string; valor: number }>
+  gastoDiario: Array<{ dia: number; diario: number; acumulado: number }>
+  gastoDiarioPrevio: Array<{ dia: number; acumulado: number }>
+  parcelamentos: Array<{
     descricao: string
-    categoria: string
-    banco?: string
-    valor: number
+    parcelaAtual: number
+    totalParcelas: number
+    valorParcela: number
+    banco: string
+    pago: number
+    restante: number
+    status: "ativo" | "finalizado"
+    ultimaData: string
   }>
-  proxProjecoes: Array<{
-    data: string
+  assinaturas: Array<{
     descricao: string
-    categoria: string
-    tipo: string
-    valor: number
+    valorMensal: number
+    banco: string
+    proximaData: string
+    pagamentos: number
   }>
+  insight: { titulo: string; descricao: string }
   atualizadoEm: string
 }
 
@@ -48,7 +54,7 @@ export function useDashboard() {
   return useQuery({
     queryKey: ["dashboard"],
     queryFn: fetchDashboard,
-    refetchInterval: 5 * 60_000, // 5 min
+    refetchInterval: 5 * 60_000,
     staleTime: 60_000,
   })
 }
