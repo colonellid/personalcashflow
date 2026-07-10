@@ -35,7 +35,7 @@ function DiaSection({ dia, tipo }: { dia: DiaGroup; tipo: FaturaGroup["tipo"] })
       {/* dia header */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-3 px-5 py-2.5 text-left hover:bg-white/[.025] transition-colors"
+        className="w-full flex items-center gap-3 px-5 py-2.5 text-left hover:bg-black/[.03] transition-colors"
       >
         <span className="text-muted shrink-0">
           {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
@@ -62,7 +62,7 @@ function DiaSection({ dia, tipo }: { dia: DiaGroup; tipo: FaturaGroup["tipo"] })
           {dia.transacoes.map((t, i) => (
             <div
               key={i}
-              className="flex items-center gap-3 px-5 py-2 hover:bg-white/[.02] transition-colors"
+              className="flex items-center gap-3 px-5 py-2 hover:bg-black/[.03] transition-colors"
             >
               <span className="w-[16px] shrink-0" />
               <div className="flex-1 min-w-0">
@@ -107,7 +107,7 @@ function FaturaCard({ grupo }: { grupo: FaturaGroup }) {
       {/* mês header */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-4 p-5 text-left hover:bg-white/[.02] transition-colors"
+        className="w-full flex items-center gap-4 p-5 text-left hover:bg-black/[.03] transition-colors"
       >
         <span className="text-text shrink-0">
           {open ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
@@ -161,7 +161,7 @@ function FaturaCard({ grupo }: { grupo: FaturaGroup }) {
           ))}
 
           {/* rodapé com totais */}
-          <div className="flex items-center justify-between px-5 py-3 bg-bg/60 border-t border-border text-xs">
+          <div className="flex items-center justify-between px-5 py-3 bg-bg border-t border-border text-xs">
             <span className="text-muted">{grupo.count} lançamentos · {grupo.dias.length} dias</span>
             <div className="flex items-center gap-4">
               {grupo.receitas > 0 && grupo.tipo !== "fatura" && (
@@ -241,7 +241,7 @@ export default function FaturasPage() {
       <nav className="sticky top-0 z-[100] border-b border-border bg-surface">
         <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-6 lg:px-8 h-[64px] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[14px] bg-[rgba(123,111,240,0.16)] border border-[rgba(123,111,240,0.20)] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-[14px] bg-accent-soft border border-accent/20 flex items-center justify-center">
               <span className="text-[18px]">🧾</span>
             </div>
             <div className="leading-tight">
@@ -268,7 +268,7 @@ export default function FaturasPage() {
 
       <main className="mx-auto max-w-[var(--container-page)] px-5 sm:px-6 lg:px-8 pt-8 pb-[60px]">
         <header className="mb-6">
-          <h1 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight leading-[1.05]">
+          <h1 className="font-display text-[28px] sm:text-[32px] leading-[1.11]">
             Faturas e Extratos
           </h1>
           <p className="text-[13px] text-muted mt-1">

@@ -58,7 +58,7 @@ export function TransacoesTable({ data }: { data: Row[] }) {
                         </TableRow>
                     ) : (
                         data.map((t, i) => (
-                            <TableRow key={i} className="transition-colors hover:bg-white/[.03] border-b-border">
+                            <TableRow key={i} className="transition-colors hover:bg-black/[.04] border-b-border">
                                 <TableCell className="text-muted whitespace-nowrap text-xs">
                                     {t.data}
                                 </TableCell>

@@ -13,7 +13,7 @@ export function Topbar({ lastUpdate, onRefresh, isLoading }: Props) {
         <nav className="sticky top-0 z-[100] border-b border-border bg-surface">
             <div className="mx-auto max-w-[var(--container-page)] px-5 sm:px-6 lg:px-8 h-[64px] flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-[14px] bg-[rgba(123,111,240,0.16)] border border-[rgba(123,111,240,0.20)] flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-[14px] bg-accent-soft border border-accent/20 flex items-center justify-center">
                         <span className="text-[18px]">💰</span>
                     </div>
 
@@ -40,7 +40,7 @@ export function Topbar({ lastUpdate, onRefresh, isLoading }: Props) {
                         type="button"
                         onClick={onRefresh}
                         disabled={isLoading}
-                        className="h-10 px-4 rounded-[12px] bg-accent text-white text-[13px] font-semibold tracking-tight transition-colors hover:bg-[#6a5fe0]"
+                        className="h-10 px-4 rounded-[12px] bg-accent text-white text-[13px] font-semibold tracking-tight transition-colors hover:bg-accent/90"
                     >
                         {isLoading ? "⏳ Atualizando..." : "Atualizar"}
                     </Button>

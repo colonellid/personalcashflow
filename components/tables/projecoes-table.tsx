@@ -39,7 +39,7 @@ export function ProjecoesTable({ data }: { data: Row[] }) {
 						data.map((p, i) => {
 							const variant = pillClass(p.tipo)
 							return (
-								<tr key={i} className="transition-colors hover:bg-white/[.03]">
+								<tr key={i} className="transition-colors hover:bg-black/[.04]">
 									{/* Data */}
 									<td className="px-3 py-3 border-b border-border text-muted whitespace-nowrap text-xs">
 										{p.data}

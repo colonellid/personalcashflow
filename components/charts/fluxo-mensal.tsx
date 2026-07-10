@@ -21,10 +21,10 @@ function cssVar(name: string, fallback: string) {
 }
 
 export function FluxoMensalChart({ data }: { data: Row[] }) {
-	const muted = cssVar("--color-muted", "#6b7699")
-	const border = cssVar("--color-border", "#272d44")
-	const teal = cssVar("--color-teal", "#00c9a7")
-	const red = cssVar("--color-red", "#ff5f7e")
+	const muted = cssVar("--color-muted", "#737373")
+	const border = cssVar("--color-border", "#e5e5e5")
+	const teal = cssVar("--color-teal", "#16a34a")
+	const red = cssVar("--color-red", "#dc2626")
 
 	const tickStyle = { fill: muted, fontSize: 11 }
 	const axisLineStyle = { stroke: border }
@@ -51,7 +51,7 @@ export function FluxoMensalChart({ data }: { data: Row[] }) {
 					/>
 
 					<Tooltip
-						cursor={{ fill: "rgba(255,255,255,.03)" }}
+						cursor={{ fill: "rgba(0,0,0,.04)" }}
 						formatter={(value) => formatBRL(Number(value))}
 					/>
 
@@ -69,14 +69,14 @@ export function FluxoMensalChart({ data }: { data: Row[] }) {
 						radius={[10, 10, 0, 0]}
 						fillOpacity={1}
 						shape={undefined}
-						fill={teal.startsWith("#") ? `${teal}A6` : "rgba(0,201,167,.65)"}
+						fill={teal.startsWith("#") ? `${teal}A6` : "rgba(22,163,74,.65)"}
 					/>
 
 					<Bar
 						dataKey="gastos"
 						name="Gastos"
 						radius={[10, 10, 0, 0]}
-						fill={red.startsWith("#") ? `${red}A6` : "rgba(255,95,126,.65)"}
+						fill={red.startsWith("#") ? `${red}A6` : "rgba(220,38,38,.65)"}
 					/>
 				</BarChart>
 			</ResponsiveContainer>

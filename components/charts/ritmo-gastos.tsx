@@ -49,15 +49,15 @@ export function RitmoGastosChart({
       <LineChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
         <XAxis
           dataKey="dia"
-          tick={{ fontSize: 11, fill: "#6b7699" }}
+          tick={{ fontSize: 11, fill: "#737373" }}
           tickLine={false}
           axisLine={false}
           ticks={[1, 15, 25, data.length]}
         />
         <YAxis hide tickFormatter={fmtK} />
         <Tooltip
-          contentStyle={{ background: "#1c2030", border: "1px solid #272d44", borderRadius: 10, fontSize: 12 }}
-          labelStyle={{ color: "#6b7699" }}
+          contentStyle={{ background: "#ffffff", border: "1px solid #e5e5e5", borderRadius: 10, fontSize: 12, boxShadow: "0px 1px 2px 0px rgba(0,0,0,.05)" }}
+          labelStyle={{ color: "#171717" }}
           formatter={(v, name) => [
             `R$ ${Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`,
             name === "atual" ? "Este mês" : "Mês passado",
@@ -67,7 +67,7 @@ export function RitmoGastosChart({
         <Line
           type="monotone"
           dataKey="previo"
-          stroke="#6b7699"
+          stroke="#c8c8c8"
           strokeWidth={1.5}
           strokeDasharray="4 4"
           dot={false}
@@ -76,7 +76,7 @@ export function RitmoGastosChart({
         <Line
           type="monotone"
           dataKey="atual"
-          stroke="#00c9a7"
+          stroke="#16a34a"
           strokeWidth={2}
           dot={false}
           connectNulls
@@ -86,8 +86,8 @@ export function RitmoGastosChart({
             x={lastAtual.dia}
             y={lastAtual.acumulado}
             r={4}
-            fill="#00c9a7"
-            stroke="#1c2030"
+            fill="#16a34a"
+            stroke="#ffffff"
             strokeWidth={2}
           />
         )}

@@ -83,7 +83,7 @@ function TabNav({ active, onChange, onRefresh, isFetching }: {
                   "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border",
                   isActive
                     ? "bg-accent/15 text-text border-accent/35"
-                    : "text-muted border-transparent hover:text-text hover:bg-white/[.04]",
+                    : "text-muted border-transparent hover:text-text hover:bg-black/[.05]",
                 ].join(" ")}
               >
                 <Icon size={14} />
@@ -152,17 +152,17 @@ function VisaoGeral({ data, dataUpdatedAt }: { data: DashboardData; dataUpdatedA
           <p className="text-sm text-muted mb-5 relative leading-relaxed">{insight.descricao}</p>
 
           <div className="grid grid-cols-3 gap-3 relative mb-4">
-            <div className="bg-bg/60 rounded-xl p-3">
+            <div className="bg-bg rounded-xl p-3">
               <p className="text-[10px] text-muted uppercase tracking-wide mb-1">Gasto em {hoje.toLocaleDateString("pt-BR", { month: "long" })}</p>
               <p className="text-base font-extrabold">{formatBRL(resumo.gastosMes)}</p>
             </div>
-            <div className="bg-bg/60 rounded-xl p-3">
+            <div className="bg-bg rounded-xl p-3">
               <p className="text-[10px] text-muted uppercase tracking-wide mb-1">Vs. mês anterior</p>
               <p className={`text-base font-extrabold ${resumo.variacao > 0 ? "text-red" : "text-teal"}`}>
                 {resumo.variacao > 0 ? "↑" : "↓"} {Math.abs(resumo.variacao)}%
               </p>
             </div>
-            <div className="bg-bg/60 rounded-xl p-3">
+            <div className="bg-bg rounded-xl p-3">
               <p className="text-[10px] text-muted uppercase tracking-wide mb-1">Maior gasto</p>
               <p className="text-base font-extrabold">{formatBRL(resumo.maiorGastoValor)}</p>
               <p className="text-[10px] text-muted">dia {resumo.maiorGastoDia}</p>
@@ -336,7 +336,7 @@ function DiaSection({ dia, tipo }: { dia: DiaGroup; tipo: FaturaGroup["tipo"] })
   const [open, setOpen] = useState(false)
   return (
     <div className="border-b border-border/40 last:border-0">
-      <button onClick={() => setOpen(v => !v)} className="w-full flex items-center gap-3 px-5 py-2.5 text-left hover:bg-white/[.025] transition-colors">
+      <button onClick={() => setOpen(v => !v)} className="w-full flex items-center gap-3 px-5 py-2.5 text-left hover:bg-black/[.03] transition-colors">
         <span className="text-muted shrink-0">{open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}</span>
         <span className="text-xs font-semibold text-muted w-[120px] shrink-0">{fmtDiaLabel(dia.dataKey)}</span>
         <span className="text-xs text-muted">{dia.transacoes.length} lançamento{dia.transacoes.length !== 1 ? "s" : ""}</span>
@@ -348,7 +348,7 @@ function DiaSection({ dia, tipo }: { dia: DiaGroup; tipo: FaturaGroup["tipo"] })
       {open && (
         <div className="pb-1">
           {dia.transacoes.map((t, i) => (
-            <div key={i} className="flex items-center gap-3 px-5 py-2 hover:bg-white/[.02] transition-colors">
+            <div key={i} className="flex items-center gap-3 px-5 py-2 hover:bg-black/[.03] transition-colors">
               <span className="w-4 shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium truncate">{t.descricao || "—"}</div>
@@ -375,7 +375,7 @@ function FaturaCard({ grupo }: { grupo: FaturaGroup }) {
 
   return (
     <div className="card overflow-hidden">
-      <button onClick={() => setOpen(v => !v)} className="w-full flex items-center gap-4 p-5 text-left hover:bg-white/[.02] transition-colors">
+      <button onClick={() => setOpen(v => !v)} className="w-full flex items-center gap-4 p-5 text-left hover:bg-black/[.03] transition-colors">
         <span className="shrink-0">{open ? <ChevronDown size={18} /> : <ChevronRight size={18} />}</span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -403,7 +403,7 @@ function FaturaCard({ grupo }: { grupo: FaturaGroup }) {
       {open && (
         <div className="border-t border-border">
           {grupo.dias.map(dia => <DiaSection key={dia.dataKey} dia={dia} tipo={grupo.tipo} />)}
-          <div className="flex items-center justify-between px-5 py-3 bg-bg/60 border-t border-border text-xs">
+          <div className="flex items-center justify-between px-5 py-3 bg-bg border-t border-border text-xs">
             <span className="text-muted">{grupo.count} lançamentos · {grupo.dias.length} dias</span>
             <div className="flex items-center gap-4">
               {grupo.receitas > 0 && grupo.tipo !== "fatura" && <span className="text-teal font-semibold">+{formatBRL(grupo.receitas)}</span>}

@@ -5,11 +5,11 @@ import { formatBRL } from "@/lib/format"
 type DayData = { dia: number; diario: number }
 
 function intensityClass(valor: number, max: number): string {
-  if (valor === 0) return "bg-card text-muted/40"
+  if (valor === 0) return "bg-black/[.03] text-muted/50"
   const ratio = valor / max
   if (ratio < 0.2) return "bg-red/15 text-text"
   if (ratio < 0.5) return "bg-red/30 text-text"
-  if (ratio < 0.8) return "bg-red/55 text-text"
+  if (ratio < 0.8) return "bg-red/60 text-white"
   return "bg-red text-white"
 }
 
@@ -80,7 +80,7 @@ export function HeatmapCalendar({
       <div className="flex items-center justify-between mt-3 text-[11px] text-muted">
         <span>Menos</span>
         <div className="flex items-center gap-1">
-          {["bg-card border border-border", "bg-red/15", "bg-red/30", "bg-red/55", "bg-red"].map((cls, i) => (
+          {["bg-black/[.03]", "bg-red/15", "bg-red/30", "bg-red/60", "bg-red"].map((cls, i) => (
             <div key={i} className={`w-4 h-4 rounded-sm ${cls}`} />
           ))}
         </div>

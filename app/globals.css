@@ -1,39 +1,66 @@
 @import "tailwindcss";
 
 /* =========================================================
-   Personal Cashflow — Global styles (Dark, soft cards)
+   Personal Cashflow — Global styles (Light, border-first)
    Tailwind v4 (CSS-first) via @theme
+   Tokens portados de docs/design-system/ (referência: Dub)
    ========================================================= */
 
 @theme {
-  /* cores */
-  --color-bg: #0d0f18; /* background body */
-  --color-surface: #141720; /* elevação 1 */
-  --color-card: #1c2030; /* elevação 2 (cards) */
-  --color-border: #272d44;
+  /* ---- superfícies ----
+     Canvas (Dub) = branco puro; usado aqui para cards e nav.
+     Paper Mist (Dub) = alt-surface; usado como fundo geral do app
+     para que os cards ganhem profundidade só por contraste de tom,
+     sem depender de sombra pesada. */
+  --color-bg: #f5f5f5; /* Paper Mist */
+  --color-surface: #ffffff; /* Canvas White — nav/topbar */
+  --color-card: #ffffff; /* Canvas White — cards */
+  --color-border: #e5e5e5; /* Ash — hairline border padrão */
 
-  --color-accent: #7b6ff0; /* brand roxo */
-  --color-accent-soft: rgba(123, 111, 240, 0.18);
+  /* ---- marca ---- */
+  --color-accent: #2563eb; /* Electric Blue */
+  --color-accent-soft: rgba(37, 99, 235, 0.1);
 
-  --color-teal: #00c9a7; /* positivo / receita */
-  --color-red: #ff5f7e; /* negativo / gasto */
-  --color-yellow: #f9c846; /* aviso / futuro */
-  --color-blue: #4ca3f5; /* informativo */
+  /* ---- semântica financeira ----
+     O guia Dub não define papéis financeiros (não é um app de
+     finanças). Extrapolação documentada em docs/design-system/README.md:
+     - receita/positivo → Vivid Green (acento de suporte do Dub)
+     - aviso/futuro      → Tangerine (acento de suporte do Dub)
+     - informativo       → Electric Blue (reaproveita o acento de marca)
+     - gasto/negativo    → Dub não define vermelho; usa-se um vermelho
+       sóbrio e desaturado, coerente com a paleta "quiet/editorial". */
+  --color-teal: #16a34a; /* Vivid Green — receita / positivo */
+  --color-red: #dc2626; /* vermelho editorial — gasto / negativo */
+  --color-yellow: #ea580c; /* Tangerine — aviso / futuro */
+  --color-blue: #2563eb; /* Electric Blue — informativo */
 
-  --color-text: #eaedf8;
-  --color-muted: #6b7699;
+  /* ---- texto ---- */
+  --color-text: #171717; /* Charcoal */
+  --color-muted: #737373; /* Fog */
 
-  /* superfícies */
-  --radius-card: 16px;
-  --radius-pill: 999px;
-  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.35);
-  --shadow-card-soft: 0 6px 20px rgba(0, 0, 0, 0.28);
+  /* ---- geometria ----
+     Vocabulário fechado do Dub: 9999px pills, 16px large cards,
+     12px cards, 8px botões, 6px inputs. */
+  --radius-card: 12px;
+  --radius-pill: 9999px;
 
-  /* tipografia */
-  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  /* ---- sombras ----
+     Border-first: cards ficam praticamente planos em repouso
+     (apenas 1px de borda), sombra só aparece no hover. */
+  --shadow-card-soft: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
 
-  /* layout */
+  /* ---- tipografia ----
+     Satoshi (display, 36–48px) não tem licença livre disponível;
+     o próprio guia Dub prescreve Inter peso 500 como substituto —
+     aplicada via .font-display abaixo. Geist Mono é o mono nativo
+     do guia, usado para dados tabulares/numéricos. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
+
+  /* ---- layout ---- */
   --container-page: 1120px;
 }
 
@@ -45,7 +72,6 @@ body {
   min-height: 100vh;
 }
 
-/* base */
 * {
   border-color: var(--color-border);
 }
@@ -62,14 +88,13 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid rgba(123, 111, 240, 0.35);
+  outline: 2px solid rgba(37, 99, 235, 0.4);
   outline-offset: 2px;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
-/* seleção suave */
 ::selection {
-  background: rgba(123, 111, 240, 0.22);
+  background: rgba(37, 99, 235, 0.16);
 }
 
 /* =========================================================
@@ -87,90 +112,118 @@ a {
   box-shadow: var(--shadow-card-soft);
 }
 
-/* hover premium (sem “pular” demais) */
+/* hover: sai do plano só o suficiente para sinalizar interatividade */
 .card-hover {
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease,
-    border-color 180ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease,
+    border-color 160ms ease;
 }
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-card);
-  border-color: rgba(123, 111, 240, 0.22);
+  border-color: rgba(37, 99, 235, 0.25);
 }
 
-/* container padrão (se quiser usar sem depender de classe tailwind custom) */
 .container-page {
   max-width: var(--container-page);
   margin-inline: auto;
 }
 
+/* Satoshi substitute — Inter peso 500, tracking levemente negativo,
+   reservado para títulos de página (36–48px). Nunca usar em corpo. */
+.font-display {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* dados numéricos alinhados em coluna (moeda, datas, %) */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 /* =========================================================
-   Pills / badges (BudgetFlow vibes)
+   Pills / badges — tinted background, texto na cor do acento,
+   borda sutil (Dub "Status Badge" component)
    ========================================================= */
 
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
+  padding: 5px 10px;
   border-radius: var(--radius-pill);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1;
   border: 1px solid transparent;
   user-select: none;
 }
 
 .pill-purple {
-  background: rgba(123, 111, 240, 0.14);
+  background: rgba(37, 99, 235, 0.1);
   color: var(--color-accent);
-  border-color: rgba(123, 111, 240, 0.18);
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+.pill-blue {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--color-blue);
+  border-color: rgba(37, 99, 235, 0.2);
 }
 
 .pill-green {
-  background: rgba(0, 201, 167, 0.14);
+  background: rgba(22, 163, 74, 0.12);
   color: var(--color-teal);
-  border-color: rgba(0, 201, 167, 0.18);
+  border-color: rgba(22, 163, 74, 0.22);
+}
+
+.pill-teal {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--color-teal);
+  border-color: rgba(22, 163, 74, 0.22);
 }
 
 .pill-red {
-  background: rgba(255, 95, 126, 0.14);
+  background: rgba(220, 38, 38, 0.1);
   color: var(--color-red);
-  border-color: rgba(255, 95, 126, 0.18);
+  border-color: rgba(220, 38, 38, 0.2);
 }
 
 .pill-yellow {
-  background: rgba(249, 200, 70, 0.14);
+  background: rgba(234, 88, 12, 0.12);
   color: var(--color-yellow);
-  border-color: rgba(249, 200, 70, 0.18);
+  border-color: rgba(234, 88, 12, 0.22);
 }
 
 .pill-muted {
-  background: rgba(107, 118, 153, 0.12);
-  color: rgba(234, 237, 248, 0.78);
-  border-color: rgba(107, 118, 153, 0.18);
+  background: rgba(0, 0, 0, 0.04);
+  color: #525252;
+  border-color: rgba(0, 0, 0, 0.08);
 }
 
 /* =========================================================
-   Scrollbar (discreta)
+   Scrollbar (discreta, light)
    ========================================================= */
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(39, 45, 68, 0.9);
+  background: #d4d4d4;
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #c8c8c8;
 }
 *::-webkit-scrollbar-track {
   background: transparent;
 }
 
 /* =========================================================
-   Recharts — tooltip override pra combinar com o tema dark
+   Recharts — tooltip claro, sem sombra pesada
    ========================================================= */
 
 .recharts-tooltip-wrapper {
@@ -180,23 +233,21 @@ a {
 .recharts-default-tooltip {
   background: var(--color-card) !important;
   border: 1px solid var(--color-border) !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   box-shadow: var(--shadow-card-soft) !important;
 }
 
-/* tipografia do tooltip mais “clean” */
 .recharts-default-tooltip .recharts-tooltip-label {
-  color: rgba(234, 237, 248, 0.9) !important;
-  font-weight: 700 !important;
+  color: var(--color-text) !important;
+  font-weight: 600 !important;
   margin-bottom: 6px !important;
 }
 
 .recharts-default-tooltip .recharts-tooltip-item {
-  color: rgba(234, 237, 248, 0.85) !important;
+  color: #262626 !important;
   font-size: 12px !important;
 }
 
-/* cursor hover do chart mais sutil */
 .recharts-tooltip-cursor {
-  fill: rgba(255, 255, 255, 0.03) !important;
+  fill: rgba(0, 0, 0, 0.04) !important;
 }
